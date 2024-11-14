@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="appBackground">#ECEBE7</color>
+    <color name="blue">#004074</color>
+    <color name="slightdarkbutton">#D0CEC9</color>
 </resources>
