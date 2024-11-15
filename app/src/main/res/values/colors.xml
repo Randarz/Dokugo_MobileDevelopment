@@ -4,5 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="appBackground">#ECEBE7</color>
     <color name="blue">#004074</color>
-    <color name="slightdarkbutton">#D0CEC9</color>
+    <color name="slightdarkbutton">#c4c4bc</color>
+    <color name="darkbutton">#50514a</color>
 </resources>

@@ -10,5 +10,17 @@
         <item name="android:textColor">@color/blue</item>
     </style>
 
+    <style name="slightdarkbutton">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/slightdarkbutton</item>
+    </style>
+
+    <style name="darkbutton">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/darkbutton</item>
+    </style>
+
     <style name="Theme.Dokugo" parent="Base.Theme.Dokugo" />
 </resources>
