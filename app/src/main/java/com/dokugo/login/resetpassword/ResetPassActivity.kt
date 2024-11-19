@@ -2,23 +2,22 @@ package com.dokugo.login.resetpassword
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.dokugo.R
-import com.dokugo.login.signup.SignUpActivity
+import com.dokugo.login.signin.SignInActivity
 import com.google.android.material.button.MaterialButton
 
-class OtpActivity : AppCompatActivity() {
+class ResetPassActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_otp)
+        setContentView(R.layout.activity_reset_pass)
 
-        val btConfOtp: MaterialButton = findViewById(R.id.bt_confotp)
+        val btConfOtp: MaterialButton = findViewById(R.id.bt_resetpass)
         btConfOtp.setOnClickListener {
-            val intent = Intent(this, ResetPassActivity::class.java)
+            val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
     }
