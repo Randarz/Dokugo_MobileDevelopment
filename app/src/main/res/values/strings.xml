@@ -2,6 +2,8 @@
     <string name="app_name">Dokugo</string>
     <string name="icon">icon</string>
     <string name="welcome">Welcome to Dokugo</string>
+
+    <!--Signin & Login Page-->
     <string name="sign_in">Sign In</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -12,4 +14,32 @@
     <string name="or_login_with">or login with</string>
     <string name="donthaveaccount">Don\'t have account?</string>
     <string name="sign_up">Sign Up</string>
+
+    <!--UI-->
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <!--Settings-->
+    <string name="edit_account">Edit Account</string>
+    <string name="change_email">Change Email</string>
+    <string name="delete_account">Delete Account</string>
+
+
+    <!--Income & Expense-->
+    <string name="date_hint">Date</string>
+    <string name="amount_hint">Amount</string>
+    <string name="note_hint">Notes</string>
+    <string name="save">Save</string>
+
+    <!--Kategory Uang-->
+    <string-array name="categories">
+        <item>Kategori 1</item>
+        <item>Kategori 2</item>
+        <item>Kategori 3</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="change_photo">Change Photo</string>
 </resources>
