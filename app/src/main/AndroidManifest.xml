@@ -16,6 +16,14 @@
             android:name=".menuawal.HomeActivity"
             android:exported="false"
             android:label="@string/title_activity_home" />
+            android:name=".login.resetpassword.ResetPassActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login.resetpassword.OtpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login.resetpassword.ForgetPasswordActivity"
+            android:exported="false" />
         <activity
             android:name=".login.signup.SignUpActivity"
             android:exported="false" />

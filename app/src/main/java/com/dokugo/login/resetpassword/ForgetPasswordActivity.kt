@@ -1,7 +1,8 @@
-package com.dokugo.login.signup
+package com.dokugo.login.resetpassword
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -9,25 +10,29 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.dokugo.R
 import com.dokugo.login.signin.SignInActivity
+import com.dokugo.login.signup.SignUpActivity
 import com.google.android.material.button.MaterialButton
 
-class SignUpActivity : AppCompatActivity() {
+class ForgetPasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
+        setContentView(R.layout.activity_forget_password)
 
-        // Find the Button and set an OnClickListener
-        val btSignIn: MaterialButton = findViewById(R.id.bt_signin)
-        btSignIn.setOnClickListener {
-            // Create an Intent to open the SignInActivity
+        val icBack: ImageView = findViewById(R.id.ic_back)
+        icBack.setOnClickListener {
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
 
-        val tvSignIn: TextView = findViewById(R.id.tv_signin)
-        tvSignIn.setOnClickListener {
-            // Create an Intent to open the SignInActivity
+        val tvLogin: TextView = findViewById(R.id.tv_textlogin)
+        tvLogin.setOnClickListener {
             val intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
+        }
+
+        val btSendEmail : MaterialButton = findViewById(R.id.bt_sendemail)
+        btSendEmail.setOnClickListener{
+            val intent = Intent(this, OtpActivity::class.java)
             startActivity(intent)
         }
     }
