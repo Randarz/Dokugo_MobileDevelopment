@@ -21,6 +21,7 @@ android {
     buildFeatures{
         viewBinding = true
     }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -57,6 +58,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation (libs.material.v160)
 
-
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
 }

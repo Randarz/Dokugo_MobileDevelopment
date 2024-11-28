@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".menuawal.ui.budgedmanage.income.IncomeFragment">
+    tools:context="ui.moneymanage.IncomeFragment">
 
     <!-- Date Picker EditText -->
     <EditText
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/date_hint"
         android:inputType="none"
-        android:drawableEnd="@drawable/ic_calendar"
+        android:drawableEnd="@drawable/ic_calender"
         android:focusable="false"
         android:backgroundTint="@color/gray"
         app:layout_constraintTop_toTopOf="parent"

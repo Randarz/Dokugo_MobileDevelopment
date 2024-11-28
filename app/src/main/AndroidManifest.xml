@@ -13,13 +13,11 @@
         android:theme="@style/Theme.Dokugo"
         tools:targetApi="31">
         <activity
-            android:name=".menuawal.HomeActivity"
+            android:name=".MainActivity"
             android:exported="false"
-            android:label="@string/title_activity_home" />
-            android:name=".login.resetpassword.ResetPassActivity"
-            android:exported="false" />
+            android:label="@string/title_activity_main" />
         <activity
-            android:name=".login.resetpassword.OtpActivity"
+            android:name="login.resetpassword.OtpActivity"
             android:exported="false" />
         <activity
             android:name=".login.resetpassword.ForgetPasswordActivity"
@@ -36,9 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

@@ -7,19 +7,27 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.dokugo.menuawal.ui.home.HomeFragment"
+        android:name="com.dokugo.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.dokugo.menuawal.ui.dashboard.DashboardFragment"
+        android:id="@+id/navigation_predict"
+        android:name="com.dokugo.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.dokugo.menuawal.ui.settings.SettingsFragment"
-        android:label="@string/title_notifications"
+        android:id="@+id/navigation_money_manager"
+        android:name="com.dokugo.ui.moneymanage.MoneyFragment"
+        android:label="@string/Monet_manager"
+        tools:layout="@layout/fragment_money"/>
+
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.dokugo.ui.settings.SettingsFragment"
+        android:label="@string/title_Setomgs"
         tools:layout="@layout/fragment_settings" />
+
 </navigation>

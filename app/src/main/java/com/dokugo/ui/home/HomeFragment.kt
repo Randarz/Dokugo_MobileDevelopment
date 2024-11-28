@@ -1,4 +1,4 @@
-package com.dokugo.menuawal.ui.home
+package com.dokugo.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

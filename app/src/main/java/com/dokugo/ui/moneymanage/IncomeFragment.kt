@@ -1,4 +1,4 @@
-package com.dokugo.menuawal.ui.budgedmanage.income
+package com.dokugo.ui.moneymanage
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
