@@ -54,5 +54,13 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="change_photo">Change Photo</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_Setomgs">Settings</string>
+    <string name="edit_account_icon" />
+    <string name="change_email_icon" />
+    <string name="delete_account_icon" />
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+    <string name="Monet_manager">Money Manager</string>
 
 </resources>
