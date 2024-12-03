@@ -9,13 +9,13 @@
     <item
         android:id="@+id/navigation_predict"
         android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:title="@string/title_preict" />
 
 
     <item
         android:id="@+id/navigation_settings"
         android:title="Settings"
         />
-    
+
 
 </menu>
