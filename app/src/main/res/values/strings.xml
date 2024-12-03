@@ -62,5 +62,10 @@
     <string name="income">Income</string>
     <string name="expense">Expense</string>
     <string name="Monet_manager">Money Manager</string>
+    <string name="income_expense"><![CDATA[Income & Expense]]></string>
+    <string name="addincome">Add Income</string>
+    <string name="time_week">1 Week</string>
+    <string name="itme_Month">Month</string>
+    <string name="time_year">Year</string>
 
 </resources>

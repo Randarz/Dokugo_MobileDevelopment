@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <!-- Icon for money -->
+        <ImageView
+            android:id="@+id/money_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_money" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingStart="16dp">
+
+            <!-- Title or Description of the money item -->
+            <TextView
+                android:id="@+id/money_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Money Title"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:fontFamily="sans-serif-medium"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+
+            <!-- Date of transaction (moved here) -->
+            <TextView
+                android:id="@+id/money_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12/12/2024"
+                android:textSize="12sp"
+                android:textColor="#8B8B8B"
+                android:layout_gravity="start"
+                android:fontFamily="sans-serif-light"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+        </LinearLayout>
+
+        <!-- Amount of money (moved to the right corner) -->
+        <TextView
+            android:id="@+id/money_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rp 0.00"
+            android:textSize="14sp"
+            android:textColor="#008000"
+            android:fontFamily="sans-serif-light"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_gravity="end" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -16,5 +16,6 @@
         android:id="@+id/navigation_settings"
         android:title="Settings"
         />
+    
 
 </menu>
