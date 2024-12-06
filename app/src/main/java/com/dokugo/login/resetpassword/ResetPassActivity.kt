@@ -2,10 +2,7 @@ package com.dokugo.login.resetpassword
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.dokugo.R
 import com.dokugo.login.signin.SignInActivity
 import com.google.android.material.button.MaterialButton
