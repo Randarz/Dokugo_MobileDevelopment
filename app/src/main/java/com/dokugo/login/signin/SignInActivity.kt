@@ -1,7 +1,9 @@
 package com.dokugo.login.signin
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -13,12 +15,22 @@ import com.dokugo.login.resetpassword.ForgetPasswordActivity
 import com.dokugo.login.signup.SignUpActivity
 import com.dokugo.ui.home.HomeFragment
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputLayout
+import com.dokugo.databinding.ActivitySignInBinding
+
 
 class SignInActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivitySignInBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
+        binding = ActivitySignInBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar?.hide()
+
+        PlayAnimation()
+
 
         val tvSignUp: TextView = findViewById(R.id.tv_signup)
         tvSignUp.setOnClickListener {
@@ -37,5 +49,48 @@ class SignInActivity : AppCompatActivity() {
             val intent = Intent(this, ForgetPasswordActivity::class.java)
             startActivity(intent)
         }
+
+    }
+
+
+
+
+    private fun PlayAnimation() {
+        with(binding) {
+
+            animateView(icon, "alpha", 0f, 1f, 0)
+            animateView(tvWelcome, "translationY", 500f, 0f, 200)
+            animateView(tvSignin, "translationY", 500f, 0f, 400)
+
+            // Paket 2: username dan layout username dijalankan bersama dengan tvPassword dan passwordComponent
+            animateView(tvUsername, "translationY", 500f, 0f, 600)
+            animateView(usernameComponent, "translationY", 500f, 0f, 600)
+            animateView(tvPassword, "translationY", 500f, 0f, 600)
+            animateView(passwordComponent, "translationY", 500f, 0f, 600)
+
+
+            animateView(forgetPass, "translationY", 500f, 0f, 800)
+            animateView(btSignin, "alpha", 0f, 1f, 1000)
+
+
+            animateView(lineWithText, "alpha", 0f, 1f, 1200)
+            animateView(apple, "alpha", 0f, 1f, 1400)
+            animateView(google, "alpha", 0f, 1f, 1600)
+            animateView(facebook, "alpha", 0f, 1f, 1800)
+            animateView(noacc, "alpha", 0f, 1f, 2000)
+            animateView(tvSignup, "alpha", 0f, 1f, 2200)
+        }
+    }
+
+    private fun animateView(view: View, property: String, startValue: Float, endValue: Float, delay: Long) {
+
+        view.visibility = View.VISIBLE
+
+        ObjectAnimator.ofFloat(view, property, startValue, endValue).apply {
+            duration = 1000
+            startDelay = delay
+            start()
+        }
     }
 }
+

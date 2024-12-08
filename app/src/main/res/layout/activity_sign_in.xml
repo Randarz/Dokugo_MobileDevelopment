@@ -9,6 +9,7 @@
 
     <ImageView
         android:id="@+id/icon"
+        android:alpha="0"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="60dp"
@@ -20,6 +21,7 @@
 
     <TextView
         android:id="@+id/tv_welcome"
+        android:translationY="700dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/welcome"
@@ -32,6 +34,7 @@
 
     <TextView
         android:id="@+id/tv_signin"
+        android:translationY="700dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_in"
@@ -44,6 +47,7 @@
 
     <TextView
         android:id="@+id/tv_username"
+        android:translationY="700dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -56,6 +60,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/usernameComponent"
+        android:translationY="700dp"
         android:layout_width="320dp"
         android:layout_height="70dp"
         app:layout_constraintTop_toBottomOf="@id/tv_username"
@@ -79,6 +84,7 @@
 
     <TextView
         android:id="@+id/tv_password"
+        android:translationY="700dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/password"
@@ -90,6 +96,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordComponent"
+        android:translationY="500dp"
         android:layout_width="320dp"
         android:layout_height="70dp"
         android:layout_marginTop="16dp"
@@ -116,6 +123,7 @@
 
     <TextView
         android:id="@+id/forgetPass"
+        android:translationY="500dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/forget"
@@ -126,6 +134,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_signin"
+        android:alpha="0"
         android:layout_width="320dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
@@ -139,6 +148,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <LinearLayout
+        android:alpha="0"
         android:id="@+id/lineWithText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -174,6 +184,7 @@
 
     <ImageView
         android:id="@+id/apple"
+        android:alpha="0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/icon_apple"
@@ -185,6 +196,7 @@
 
     <ImageView
         android:id="@+id/google"
+        android:alpha="0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/icon_google"
@@ -196,6 +208,7 @@
 
     <ImageView
         android:id="@+id/facebook"
+        android:alpha="0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/icon_facebook"
@@ -207,6 +220,7 @@
 
     <TextView
         android:id="@+id/noacc"
+        android:alpha="0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/donthaveaccount"
@@ -220,6 +234,7 @@
 
     <TextView
         android:id="@+id/tv_signup"
+        android:alpha="0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_up"
