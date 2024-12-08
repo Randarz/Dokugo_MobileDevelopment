@@ -6,63 +6,109 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context="com.dokugo.ui.moneymanage.IncomeFragment">
+    tools:context="com.dokugo.ui.moneymanage.IncomeFragment"
+    android:background="@color/appBackground">
+
+    <TextView
+        android:id="@+id/tv_income"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_income"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="20dp"/>
+
 
     <!-- Date Picker EditText -->
-    <EditText
-        android:id="@+id/etDatePicker"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilDatePicker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/date_hint"
-        android:inputType="none"
-        android:drawableEnd="@drawable/ic_calender"
-        android:focusable="false"
-        android:backgroundTint="@color/gray"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_income"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.9"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:hint="@string/date_hint">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etDatePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:drawableEnd="@drawable/ic_calender"
+            android:focusable="false"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/black"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Amount EditText -->
-    <EditText
-        android:id="@+id/etAmount"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilAmount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/amount_hint"
-        android:inputType="numberDecimal"
-        android:backgroundTint="@color/gray"
-        app:layout_constraintTop_toBottomOf="@id/etDatePicker"
+        app:layout_constraintTop_toBottomOf="@id/tilDatePicker"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.9"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:hint="@string/amount_hint">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:backgroundTint="@color/gray"
+            android:textColor="@color/black"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Category Spinner -->
-    <Spinner
-        android:id="@+id/spinnerCategory"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilCategory"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/gray"
-        app:layout_constraintTop_toBottomOf="@id/etAmount"
+        app:boxBackgroundMode="outline"
+        android:hint="Select Category"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/tilAmount"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.9"
-        android:layout_marginBottom="16dp" />
+        app:layout_constraintWidth_percent="0.9">
+
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:popupBackground="@android:color/white"
+            android:textColor="@color/black"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Note EditText -->
-    <EditText
-        android:id="@+id/etNote"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilNote"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/note_hint"
-        android:inputType="textMultiLine"
-        android:backgroundTint="@color/gray"
-        app:layout_constraintTop_toBottomOf="@id/spinnerCategory"
+        app:layout_constraintTop_toBottomOf="@id/tilCategory"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.9"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:hint="@string/note_hint">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/black"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Save Button -->
     <Button
@@ -72,10 +118,11 @@
         android:text="Save"
         android:textColor="@android:color/white"
         android:background="@color/green"
-        app:layout_constraintTop_toBottomOf="@id/etNote"
+        app:layout_constraintTop_toBottomOf="@id/tilNote"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.9"
         android:layout_marginBottom="16dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

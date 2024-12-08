@@ -93,5 +93,8 @@
     <string name="transport">Transport</string>
     <string name="food">Food</string>
     <string name="shopping">Shopping</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="tv_income">Add New Income</string>
+    <string name="tv_expense">Add New Expense</string>
 
 </resources>

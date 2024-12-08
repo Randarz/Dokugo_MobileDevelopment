@@ -57,6 +57,9 @@ class IncomeFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCategory.adapter = adapter
 
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerCategory.adapter = adapter
+
         // Set up the Save button
         btnSave.setOnClickListener {
             saveIncomeData()
