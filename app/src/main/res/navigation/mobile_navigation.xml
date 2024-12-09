@@ -31,7 +31,18 @@
         android:id="@+id/navigation_settings"
         android:name="com.dokugo.ui.settings.SettingsFragment"
         android:label="@string/title_Setomgs"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+
+        <action
+            android:id="@+id/action_settingsFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.dokugo.ui.settings.EditProfileFragment"
+        android:label="EditProfileFragment"
+        tools:layout="@layout/fragment_edit_profile" />
 
     <fragment
         android:id="@+id/incomeFragment"

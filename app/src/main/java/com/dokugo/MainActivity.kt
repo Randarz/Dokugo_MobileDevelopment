@@ -26,15 +26,6 @@ class MainActivity : AppCompatActivity() {
 
         // Set up BottomNavigationView with NavController
         navView.setupWithNavController(navController)
-
-        // Optional: Handle bottom navigation item selection to update navigation
-        navView.setOnItemSelectedListener { item ->
-            val currentDestination = navController.currentDestination?.id
-            if (currentDestination != item.itemId) {
-                navController.navigate(item.itemId)
-            }
-            true
-        }
     }
 
     // Handle "Up" navigation in the ActionBar

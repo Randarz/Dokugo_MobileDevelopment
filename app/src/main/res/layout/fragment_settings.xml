@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.settings.SettingsFragment">
+    tools:context=".ui.settings.SettingsFragment"
+    android:background="@color/appBackground">
 
     <!-- Photo Profile with Change Photo Button -->
     <FrameLayout
@@ -94,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="16dp"
-            android:text="@string/change_email"
+            android:text="@string/Logout"
             android:textSize="16sp"
             android:gravity="center_vertical" />
     </LinearLayout>

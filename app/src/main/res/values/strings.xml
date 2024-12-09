@@ -96,5 +96,11 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="tv_income">Add New Income</string>
     <string name="tv_expense">Add New Expense</string>
+    <string name="Logout">Logout This Accound</string>
+    <string name="tv_edit_profile">Edit Profile</string>
+    <string name="first_name_hint">First Name</string>
+    <string name="last_name_hint">Last Name</string>
+    <string name="username_hint">Username</string>
+    <string name="email_hint">Email</string>
 
 </resources>
