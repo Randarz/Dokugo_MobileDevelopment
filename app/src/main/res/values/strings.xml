@@ -32,18 +32,34 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="predict">Predict</string>
+    <string name="dashboard">Dashboard</string>
 
     <!--Settings-->
     <string name="edit_account">Edit Account</string>
     <string name="change_email">Change Email</string>
     <string name="delete_account">Delete Account</string>
+    <string name="Logout">Logout This Account</string>
+
+    <!--EditProfile-->
+
+    <string name="tv_edit_profile">Edit Profile</string>
+    <string name="first_name_hint">First Name</string>
+    <string name="last_name_hint">Last Name</string>
+    <string name="username_hint">Username</string>
+    <string name="email_hint">Email</string>
 
 
     <!--Income & Expense-->
+    <string name="tv_income">Add New Income</string>
+    <string name="tv_expense">Add New Expense</string>
     <string name="date_hint">Date</string>
     <string name="amount_hint">Amount</string>
     <string name="note_hint">Notes</string>
     <string name="save">Save</string>
+    <string name="add_new_expense">Add new Expense</string>
+    <string name="add_new_income">Add new income</string>
+
 
     <!--Kategory Uang-->
     <string-array name="categories">
@@ -51,8 +67,6 @@
         <item>Kategori 2</item>
         <item>Kategori 3</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="change_photo">Change Photo</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_Setomgs">Settings</string>
@@ -72,15 +86,14 @@
     <string name="date_1y">1Y</string>
     <string name="date__1m">1M</string>
     <string name="date__1w">1W</string>
-    <string name="predict">Predict</string>
-    <string name="dashboard">Dashboard</string>
+
     <string name="expanse_prediction">Expanse Prediction</string>
     <string name="month">Month</string>
     <string name="day">Day</string>
     <string name="week">Week</string>
     <string name="year">Year</string>
     <string name="all">All</string>
-    <string name="add_new_income">Add new income</string>
+
     <string name="detail_income">Detail Income</string>
     <string name="salary">Salary</string>
     <string name="others">Others</string>
@@ -88,19 +101,17 @@
     <string name="date">Date</string>
     <string name="keterangan">Keterangan</string>
     <string name="money">Money</string>
-    <string name="add_new_expense">Add new Expense</string>
+
     <string name="detail_transaction">Detail Transaction</string>
     <string name="transport">Transport</string>
     <string name="food">Food</string>
     <string name="shopping">Shopping</string>
-    <string name="edit_profile">Edit Profile</string>
-    <string name="tv_income">Add New Income</string>
-    <string name="tv_expense">Add New Expense</string>
-    <string name="Logout">Logout This Accound</string>
-    <string name="tv_edit_profile">Edit Profile</string>
-    <string name="first_name_hint">First Name</string>
-    <string name="last_name_hint">Last Name</string>
-    <string name="username_hint">Username</string>
-    <string name="email_hint">Email</string>
+
+
+    <!-- Pop Up Message-->
+    <string name="change_message">Do you want to log out?</string>
+    <string name="dialog_description">You will be redirected to login</string>
+    <string name="delete_message">Do you want to log out?</string>
+
 
 </resources>

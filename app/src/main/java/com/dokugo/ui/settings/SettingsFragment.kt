@@ -1,6 +1,9 @@
 package com.dokugo.ui.settings
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.NavOptions
 import com.dokugo.R
 import com.dokugo.databinding.FragmentSettingsBinding
+import com.dokugo.login.signin.SignInActivity
 
 class SettingsFragment : Fragment() {
 
@@ -43,6 +47,65 @@ class SettingsFragment : Fragment() {
             // Navigate to EditProfileFragment with the flag
             navController.navigate(R.id.action_settingsFragment_to_editProfileFragment, bundle, navOptions)
         }
+
+        binding.changeEmailContainer.setOnClickListener {
+            // Pastikan konteks Fragment valid
+            val builder = AlertDialog.Builder(requireContext())
+
+            // Mengambil pesan dari string.xml
+            val message = getString(R.string.change_message)
+            val description = getString(R.string.dialog_description)
+
+            // Membuat pesan dengan format HTML menggunakan Html.fromHtml()
+            val fullMessage = Html.fromHtml("<b>$message</b><br><i>$description</i>", Html.FROM_HTML_MODE_LEGACY)
+
+            builder.setMessage(fullMessage)
+                .setCancelable(false) // Tidak bisa dibatalkan dengan menekan di luar dialog
+                .setPositiveButton("Ya") { _, _ ->
+                    // Aksi saat menekan tombol "Ya"
+                    val intent = Intent(requireContext(), SignInActivity::class.java)
+                    startActivity(intent)
+                    activity?.finish() // Menutup Activity jika perlu
+                }
+                .setNegativeButton("Tidak") { dialog, _ ->
+                    // Menutup dialog jika tombol "Tidak" ditekan
+                    dialog.dismiss()
+                }
+            val alert = builder.create()
+            alert.show() // Menampilkan dialog
+        }
+
+
+        binding.deleteAccountContainer.setOnClickListener {
+            // Pastikan konteks Fragment valid
+            val builder = AlertDialog.Builder(requireContext())
+
+            // Mengambil pesan dari string.xml
+            val message = getString(R.string.delete_message)
+            val description = getString(R.string.dialog_description)
+
+            // Membuat pesan dengan format HTML menggunakan Html.fromHtml()
+            val fullMessage = Html.fromHtml("<b>$message</b><br><i>$description</i>", Html.FROM_HTML_MODE_LEGACY)
+
+            builder.setMessage(fullMessage)
+                .setCancelable(false) // Tidak bisa dibatalkan dengan menekan di luar dialog
+                .setPositiveButton("Ya") { _, _ ->
+                    // Aksi saat menekan tombol "Ya"
+                    val intent = Intent(requireContext(), SignInActivity::class.java)
+                    startActivity(intent)
+                    activity?.finish() // Menutup Activity jika perlu
+                }
+                .setNegativeButton("Tidak") { dialog, _ ->
+                    // Menutup dialog jika tombol "Tidak" ditekan
+                    dialog.dismiss()
+                }
+            val alert = builder.create()
+            alert.show() // Menampilkan dialog
+        }
+
+
+
+
 
         return root
     }

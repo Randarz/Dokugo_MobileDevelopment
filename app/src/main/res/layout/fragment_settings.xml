@@ -35,7 +35,8 @@
             android:padding="0dp"
             android:text=""
             android:layout_gravity="bottom|end"
-            android:layout_margin="4dp" />
+            android:layout_margin="4dp"
+            android:shadowColor="@color/black"/>
     </FrameLayout>
 
     <!-- Edit Account -->
@@ -66,7 +67,8 @@
             android:layout_marginStart="16dp"
             android:text="@string/edit_account"
             android:textSize="16sp"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
     <!-- Change Email -->
@@ -97,7 +99,8 @@
             android:layout_marginStart="16dp"
             android:text="@string/Logout"
             android:textSize="16sp"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
     <!-- Delete Account -->
