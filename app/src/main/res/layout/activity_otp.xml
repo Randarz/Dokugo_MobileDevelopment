@@ -35,8 +35,8 @@
 
     <EditText
         android:id="@+id/otp_digit1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="60dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
         android:inputType="number"
@@ -51,8 +51,8 @@
 
     <EditText
         android:id="@+id/otp_digit2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="60dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
         android:inputType="number"
@@ -67,9 +67,9 @@
 
     <EditText
         android:id="@+id/otp_digit3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="56dp"
+        android:layout_width="40dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="50dp"
         android:layout_weight="1"
         android:inputType="number"
         android:maxLength="1"
@@ -84,9 +84,9 @@
 
     <EditText
         android:id="@+id/otp_digit4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
+        android:layout_width="40dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="50dp"
         android:layout_weight="1"
         android:inputType="number"
         android:maxLength="1"
@@ -101,8 +101,8 @@
 
     <EditText
         android:id="@+id/otp_digit5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="60dp"
         android:layout_marginStart="10dp"
         android:layout_weight="1"
         android:inputType="number"
@@ -117,8 +117,8 @@
 
     <EditText
         android:id="@+id/otp_digit6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="60dp"
         android:layout_marginStart="10dp"
         android:layout_weight="1"
         android:inputType="number"
@@ -138,9 +138,9 @@
         android:layout_marginTop="16dp"
         android:text="@string/continue_toreset"
         android:textColor="@color/black"
-        android:background="@drawable/button_border"
         style="@style/slightdarkbutton"
-        android:backgroundTint="@color/slightdarkbutton"
+        app:backgroundTint="@color/slightdarkbutton"
+        android:background="@drawable/button_border"
         app:layout_constraintTop_toBottomOf="@id/otp_digit3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

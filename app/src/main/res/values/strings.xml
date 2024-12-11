@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Dokugo</string>
     <string name="icon">icon</string>
-    <string name="welcome">Welcome to Dokugo</string>
+    <string name="welcome">Welcome to DokuGo</string>
 
     <!--Signin & Login Page-->
     <string name="sign_in">Sign In</string>

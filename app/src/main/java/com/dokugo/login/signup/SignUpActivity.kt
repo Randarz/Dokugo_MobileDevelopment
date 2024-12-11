@@ -26,7 +26,9 @@ class SignUpActivity : AppCompatActivity() {
 
         PlayAnimation(binding.btSignin)
         PlayAnimation(binding.tvSignin)
-        PlayAnimation(binding.fnameComponent)
+        PlayAnimation(binding.usernameComponent)
+        PlayAnimation(binding.emailComponent)
+        PlayAnimation(binding.passwordComponent)
 
         binding.btSignin.setOnClickListener {
             val intent = Intent(this, SignInActivity::class.java)

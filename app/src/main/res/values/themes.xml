@@ -31,9 +31,8 @@
     </style>
 
     <style name="slightdarkbutton">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="backgroundTint">@color/slightdarkbutton</item>
+        <item name="android:backgroundTint">@color/slightdarkbutton</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="darkbutton">
