@@ -3,6 +3,8 @@ package com.dokugo.login.signin
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -17,6 +19,7 @@ import com.dokugo.ui.home.HomeFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import com.dokugo.databinding.ActivitySignInBinding
+import com.dokugo.ui.ComingsoonFragment
 
 
 class SignInActivity : AppCompatActivity() {
@@ -50,9 +53,30 @@ class SignInActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.google.setOnClickListener {
+            openComingSoonFragment()
+        }
+        binding.facebook.setOnClickListener {
+            openComingSoonFragment()
+        }
+        binding.apple.setOnClickListener {
+            openComingSoonFragment()
+        }
+
     }
 
+    private fun openComingSoonFragment() {
+        // Mengganti fragment yang ada dengan ComingsoonFragment secara penuh
+        supportFragmentManager.beginTransaction()
+            .replace(android.R.id.content, ComingsoonFragment()) // Menggunakan android.R.id.content untuk menggantikan seluruh layar
+            .addToBackStack(null) // Menambahkan fragment ke back stack agar bisa kembali ke SignInActivity
+            .commit()
 
+        // Setelah 2 detik, tutup fragment dan kembali ke SignInActivity
+        Handler(Looper.getMainLooper()).postDelayed({
+            supportFragmentManager.popBackStack() // Tutup fragment
+        }, 2000)
+    }
 
 
     private fun PlayAnimation() {

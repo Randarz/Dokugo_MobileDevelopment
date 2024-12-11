@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.dokugo.R
 import com.dokugo.database.IncomeDatabaseHelper
@@ -22,6 +23,8 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import java.text.NumberFormat
 import java.util.Locale
 import org.threeten.bp.LocalDate
+import java.text.ParseException
+import java.text.SimpleDateFormat
 
 class MoneyFragment : Fragment() {
 
@@ -115,7 +118,6 @@ class MoneyFragment : Fragment() {
         btDay.setOnClickListener { onDateButtonClicked(btDay, "Day") }
 
         // Set up income category button click listeners
-        // Set up income category button click listeners
         btIncomeAll.setOnClickListener { onIncomeButtonClicked(btIncomeAll, "All", currentTimeRange) }
         btIncomeSalary.setOnClickListener { onIncomeButtonClicked(btIncomeSalary, "Salary", currentTimeRange) }
         btIncomeOthers.setOnClickListener { onIncomeButtonClicked(btIncomeOthers, "Others", currentTimeRange) }
@@ -133,14 +135,30 @@ class MoneyFragment : Fragment() {
         btExpenseAllTime.setOnClickListener { onExpenseDateButtonClicked(btExpenseAllTime, "All Time") }
         btExpenseDay.setOnClickListener { onExpenseDateButtonClicked(btExpenseDay, "Day") }
 
-        // Set up frame_addincome click listener
         binding.frameAddincome.setOnClickListener {
-            findNavController().navigate(R.id.incomeFragment)
+            // Define the custom animation for fragment transition
+            val options = NavOptions.Builder()
+                .setEnterAnim(R.anim.fragment_slide_up_enter)  // Slide up enter animation
+                .setExitAnim(R.anim.fragment_slide_down_exit)  // Slide down exit animation
+                .setPopEnterAnim(R.anim.fragment_slide_up_enter)  // Slide up on pop (back)
+                .setPopExitAnim(R.anim.fragment_slide_down_exit)  // Slide down on pop (back)
+                .build()
+
+            // Navigate to IncomeFragment with the specified animations
+            findNavController().navigate(R.id.incomeFragment, null, options)
         }
 
-        // Set up frame_addexpense click listener
         binding.frameAddexpense.setOnClickListener {
-            findNavController().navigate(R.id.expenseFragment)
+            // Define the custom animation for fragment transition
+            val options = NavOptions.Builder()
+                .setEnterAnim(R.anim.fragment_slide_up_enter)  // Enter animation (slide up)
+                .setExitAnim(R.anim.fragment_slide_down_exit)  // Exit animation (slide down)
+                .setPopEnterAnim(R.anim.fragment_slide_up_enter)  // Pop enter animation (optional)
+                .setPopExitAnim(R.anim.fragment_slide_down_exit)  // Pop exit animation (optional)
+                .build()
+
+            // Navigate to ExpenseFragment with custom animation
+            findNavController().navigate(R.id.expenseFragment, null, options)
         }
 
         // Update chart data and details with actual data
@@ -271,21 +289,38 @@ class MoneyFragment : Fragment() {
         lineChart.legend.isEnabled = false
 
         // Configure the x-axis labels
+
+
+        // Menggunakan SimpleDateFormat untuk mengonversi date menjadi string yang terformat
         val xAxis: XAxis = lineChart.xAxis
+        val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()) // Sesuaikan format tanggal Anda
+
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return when (value.toInt()) {
-                    0 -> ""
-                    incomeData.size + 1 -> ""
-                    else -> incomeData.getOrNull(value.toInt() - 1)?.category ?: value.toString()
+                // Asumsikan bahwa "value" mewakili indeks atau posisi data pada sumbu X
+                val index = value.toInt()
+
+                // Pastikan incomeData atau expenseData berisi list dengan data yang memiliki tanggal
+                val date = incomeData.getOrNull(index)?.date ?: "" // Dapatkan tanggal berdasarkan index data
+
+                // Parse tanggal dan format sesuai keinginan
+                return try {
+                    val parsedDate = dateFormatter.parse(date)
+                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(parsedDate!!)
+                } catch (e: ParseException) {
+                    ""
                 }
             }
         }
+
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)
         xAxis.setDrawGridLines(false)
         xAxis.granularity = 1f
-        xAxis.labelCount = incomeData.size + 2
+        xAxis.labelCount = incomeData.size + 1
         xAxis.isGranularityEnabled = true
+
+
+
 
         // Configure the y-axis
         val yAxis: YAxis = lineChart.axisLeft
@@ -331,22 +366,45 @@ class MoneyFragment : Fragment() {
         lineChart.description.isEnabled = false
         lineChart.legend.isEnabled = false
 
-        // Configure the x-axis labels
+
+
+
+        // Configure the x-axis labels for Expense
         val xAxis: XAxis = lineChartEx.xAxis
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return when (value.toInt()) {
-                    0 -> ""
-                    expenseData.size + 1 -> ""
-                    else -> expenseData.getOrNull(value.toInt() - 1)?.category ?: value.toString()
+                // Mengambil indeks untuk mendapatkan data berdasarkan nilai x
+                val index = value.toInt()
+
+                // Pastikan index valid (tidak keluar dari rentang data)
+                return if (index == 0 || index == expenseData.size + 1) {
+                    ""  // Mengosongkan label untuk posisi awal dan akhir
+                } else {
+                    // Ambil tanggal dari data Expense
+                    val expense = expenseData.getOrNull(index - 1)
+                    val dateStr = expense?.date ?: return value.toString() // Ambil tanggal atau tampilkan value jika data tidak ada
+
+                    // Format tanggal menggunakan SimpleDateFormat
+                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale("in", "ID"))
+                    try {
+                        val formattedDate = dateFormat.format(SimpleDateFormat("yyyy-MM-dd", Locale("in", "ID")).parse(dateStr))
+                        formattedDate
+                    } catch (e: ParseException) {
+                        dateStr // Jika format parsing gagal, tampilkan tanggal mentah
+                    }
                 }
             }
         }
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)
-        xAxis.setDrawGridLines(false)
-        xAxis.granularity = 1f
-        xAxis.labelCount = expenseData.size + 2
-        xAxis.isGranularityEnabled = true
+
+// Pengaturan sumbu X
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)  // Menempatkan label di bagian bawah
+        xAxis.setDrawGridLines(false)  // Menonaktifkan garis grid pada sumbu X
+        xAxis.granularity = 1f  // Granularity untuk jarak antar label
+        xAxis.labelCount = expenseData.size + 2  // Mengatur jumlah label
+        xAxis.isGranularityEnabled = true  // Mengaktifkan granularity
+
+
+
 
         // Configure the y-axis
         val yAxis: YAxis = lineChartEx.axisLeft

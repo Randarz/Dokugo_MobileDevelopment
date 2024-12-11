@@ -2,33 +2,47 @@ package com.dokugo.login.signup
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.dokugo.R
+import com.dokugo.databinding.ActivitySignUpBinding
 import com.dokugo.login.signin.SignInActivity
 import com.google.android.material.button.MaterialButton
 
 class SignUpActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivitySignUpBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
 
-        // Find the Button and set an OnClickListener
-        val btSignIn: MaterialButton = findViewById(R.id.bt_signin)
-        btSignIn.setOnClickListener {
-            // Create an Intent to open the SignInActivity
+        binding = ActivitySignUpBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        PlayAnimation(binding.btSignin)
+        PlayAnimation(binding.tvSignin)
+        PlayAnimation(binding.fnameComponent)
+
+        binding.btSignin.setOnClickListener {
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
 
-        val tvSignIn: TextView = findViewById(R.id.tv_signin)
-        tvSignIn.setOnClickListener {
+        binding.tvSignin.setOnClickListener {
             // Create an Intent to open the SignInActivity
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
     }
+
+    private fun PlayAnimation(view: View) {
+        val fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+        view.startAnimation(fadeIn)
+    }
+
 }

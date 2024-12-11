@@ -10,26 +10,21 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Inflate the layout and set it as the content view
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize NavController and BottomNavigationView
-        navController = findNavController(R.id.nav_host_fragment_activity_main)
-        val navView: BottomNavigationView = binding.navView
+        // Set up NavController for navigating between fragments
+        val navController: NavController = findNavController(R.id.nav_host_fragment_activity_main)
 
-        // Set up BottomNavigationView with NavController
-        navView.setupWithNavController(navController)
-    }
+        // Set up BottomNavigationView to work with the NavController
+        val bottomNavView: BottomNavigationView = binding.navView
+        bottomNavView.setupWithNavController(navController)
 
-    // Handle "Up" navigation in the ActionBar
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
+        // Optional: Handling the back button behavior for the BottomNavigationView
+
     }
 }

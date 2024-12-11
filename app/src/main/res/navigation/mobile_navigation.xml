@@ -9,7 +9,17 @@
         android:id="@+id/navigation_home"
         android:name="com.dokugo.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_predict"
+            app:destination="@id/navigation_predict"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+
+            />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_predict"
