@@ -17,8 +17,6 @@
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
-
-            />
     </fragment>
 
     <fragment
@@ -32,9 +30,9 @@
         android:name="com.dokugo.ui.moneymanage.MoneyFragment"
         android:label="@string/Money_manager"
         tools:layout="@layout/fragment_money">
-    <action
-        android:id="@+id/action_moneyFragment_to_incomeFragment"
-        app:destination="@id/incomeFragment" />
+        <action
+            android:id="@+id/action_moneyFragment_to_incomeFragment"
+            app:destination="@id/incomeFragment" />
     </fragment>
 
     <fragment
@@ -42,7 +40,6 @@
         android:name="com.dokugo.ui.settings.SettingsFragment"
         android:label="@string/title_Setomgs"
         tools:layout="@layout/fragment_settings">
-
         <action
             android:id="@+id/action_settingsFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
@@ -52,7 +49,11 @@
         android:id="@+id/editProfileFragment"
         android:name="com.dokugo.ui.settings.EditProfileFragment"
         android:label="EditProfileFragment"
-        tools:layout="@layout/fragment_edit_profile" />
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_settingsFragment"
+            app:destination="@id/navigation_settings" />
+    </fragment>
 
     <fragment
         android:id="@+id/incomeFragment"

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dokugo</string>
+    <string name="app_name">DokuGo</string>
     <string name="icon">icon</string>
     <string name="welcome">Welcome to DokuGo</string>
 
@@ -36,10 +36,13 @@
     <string name="dashboard">Dashboard</string>
 
     <!--Settings-->
+    <string name="profile">Profile</string>
+    <string name="profile_pic">Profile Avatar</string>
     <string name="edit_account">Edit Account</string>
     <string name="change_email">Change Email</string>
     <string name="delete_account">Delete Account</string>
-    <string name="Logout">Logout This Account</string>
+    <string name="Logout">Logout</string>
+    <string name="change_photo">Change Photo</string>
 
     <!--EditProfile-->
 
@@ -67,7 +70,7 @@
         <item>Kategori 2</item>
         <item>Kategori 3</item>
     </string-array>
-    <string name="change_photo">Change Photo</string>
+
     <string name="title_activity_main">MainActivity</string>
     <string name="title_Setomgs">Settings</string>
     <string name="edit_account_icon" />
@@ -115,6 +118,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="available">This Feature is gonna be Available Soon</string>
+    <string name="phone_number">Phone Number</string>
 
 
 </resources>

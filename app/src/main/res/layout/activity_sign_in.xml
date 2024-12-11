@@ -85,7 +85,7 @@
             android:textSize="16sp"
             android:textColor="@color/black"
             android:background="@drawable/f_text"
-            android:inputType="text" />
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView

@@ -51,7 +51,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    //Naviagion Componen
+
+    //Naviagtion Componen
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.material3.android)
@@ -66,6 +67,17 @@ dependencies {
 
     implementation (libs.mpandroidchart)
     implementation (libs.threetenabp)
+    implementation (libs.gson)
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.3")
+
+    //Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation(libs.converter.gson)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
 
 
 
