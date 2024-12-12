@@ -67,4 +67,5 @@ class UserRepository(private val apiService: ApiService) {
         val resetData = mapOf("resetToken" to resetToken, "newPassword" to newPassword)
         return apiService.resetPassword(resetData)
     }
+
 }
