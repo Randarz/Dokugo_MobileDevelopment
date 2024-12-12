@@ -1,5 +1,7 @@
 package com.dokugo.data.network
 
+import com.dokugo.data.response.ExpenseRequest
+import com.dokugo.data.response.ExpenseResponse
 import com.dokugo.data.response.GenericResponse
 import com.dokugo.data.response.LoginResponse
 import com.dokugo.data.response.ProfileResponse

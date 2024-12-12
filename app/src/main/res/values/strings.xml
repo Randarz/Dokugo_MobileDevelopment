@@ -124,6 +124,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="available">This Feature is gonna be Available Soon</string>
     <string name="phone_number">Phone Number</string>
+    <string name="send">Send</string>
 
 
 </resources>

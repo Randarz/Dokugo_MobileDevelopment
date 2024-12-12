@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_moneyFragment_to_incomeFragment"
             app:destination="@id/incomeFragment" />
+        <action
+            android:id="@+id/action_moneyFragment_to_expenseFragment"
+            app:destination="@id/expenseFragment" />
     </fragment>
 
     <fragment

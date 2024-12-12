@@ -5,10 +5,6 @@ import com.dokugo.data.response.GenericResponse
 import com.dokugo.data.response.LoginResponse
 import com.dokugo.data.response.ProfileResponse
 import com.dokugo.data.response.RegisterResponse
-import okhttp3.MultipartBody
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
-import java.io.File
 
 class UserRepository(private val apiService: ApiService) {
 

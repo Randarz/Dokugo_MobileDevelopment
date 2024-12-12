@@ -17,6 +17,7 @@ import com.dokugo.databinding.FragmentEditProfileBinding
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.HttpException
+import android.util.Log
 
 class EditProfileFragment : Fragment() {
 
@@ -57,6 +58,9 @@ class EditProfileFragment : Fragment() {
         val email = sharedPreferences.getString("email", null)
         val phoneNumber = sharedPreferences.getString("phone_number", null)
 
+        // Log the phone number to ensure it's being loaded correctly
+        Log.d("EditProfileFragment", "Loaded phone number: $phoneNumber")
+
         if (username != null && email != null && phoneNumber != null) {
             binding.etUsername.setText(username)
             binding.etEmail.setText(email)
@@ -72,9 +76,21 @@ class EditProfileFragment : Fragment() {
             try {
                 val token = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE).getString("auth_token", null) ?: ""
                 val response = userRepository.getProfile(token)
+
+                // Log the response for debugging
+                Log.d("EditProfileFragment", "Response user data: ${response.user}")
+                Log.d("EditProfileFragment", "Phone number from response: ${response.user.phoneNumber}")
+
+                // Set values into the UI
                 binding.etUsername.setText(response.user.username)
                 binding.etEmail.setText(response.user.email)
-                binding.etPhoneNumber.setText(response.user.phoneNumber)
+
+                // Check phone number is not null or empty before setting it
+                if (!response.user.phoneNumber.isNullOrBlank()) {
+                    binding.etPhoneNumber.setText(response.user.phoneNumber)
+                } else {
+                    binding.etPhoneNumber.setText("No phone number provided")
+                }
 
                 // Save profile data in SharedPreferences
                 val sharedPreferences = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
@@ -93,12 +109,18 @@ class EditProfileFragment : Fragment() {
         }
     }
 
+
+
     private fun updateProfile(username: String, email: String, phoneNumber: String) {
         showLoading(true)
         lifecycleScope.launch {
             try {
                 val token = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE).getString("auth_token", null) ?: ""
                 val response = userRepository.updateProfile(token, username, email, phoneNumber)
+
+                // Log the response to confirm if the update was successful
+                Log.d("EditProfileFragment", "Profile update response: $response")
+
                 if (!response.error) {
                     // Update SharedPreferences with new profile data
                     val sharedPreferences = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
@@ -109,6 +131,7 @@ class EditProfileFragment : Fragment() {
                         apply()
                     }
                     Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show()
+
                     // Navigate back to SettingsFragment
                     findNavController().navigate(R.id.action_editProfileFragment_to_settingsFragment)
                 } else {

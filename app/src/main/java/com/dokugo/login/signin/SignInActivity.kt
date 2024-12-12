@@ -86,15 +86,14 @@ class SignInActivity : AppCompatActivity() {
             try {
                 val response = userRepository.loginUser(email, password)
                 if (!response.error) {
-                    // Save token and navigate to the main activity
                     val token = response.token
-                    onLoginSuccess(token)
+                    saveToken(token)
+                    fetchUserProfile(token)
                     Toast.makeText(this@SignInActivity, "Login successful", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this@SignInActivity, "Error: ${response.message}", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                // Parse the error response
                 val errorMessage = parseErrorResponse(e)
                 Toast.makeText(this@SignInActivity, "Login failed: $errorMessage", Toast.LENGTH_SHORT).show()
             } finally {
@@ -102,6 +101,39 @@ class SignInActivity : AppCompatActivity() {
                 progressBar.visibility = View.GONE
             }
         }
+    }
+
+    private fun fetchUserProfile(token: String) {
+        lifecycleScope.launch {
+            try {
+                val profileResponse = userRepository.getProfile(token)
+                saveUserId(profileResponse.user.id)
+                navigateToMainActivity()
+            } catch (e: Exception) {
+                val errorMessage = parseErrorResponse(e)
+                Toast.makeText(this@SignInActivity, "Failed to fetch user profile: $errorMessage", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun saveToken(token: String) {
+        val sharedPreferences: SharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("auth_token", token)
+        editor.apply()
+    }
+
+    private fun saveUserId(userId: String) {
+        val sharedPreferences: SharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("user_id", userId)
+        editor.apply()
+    }
+
+    private fun navigateToMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun parseErrorResponse(exception: Exception): String {
@@ -116,18 +148,6 @@ class SignInActivity : AppCompatActivity() {
         } catch (e: Exception) {
             exception.message ?: "Unknown error"
         }
-    }
-
-    private fun onLoginSuccess(token: String) {
-        val sharedPreferences: SharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putString("auth_token", token)
-        editor.apply()
-
-        // Navigate to the next screen
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 
     private fun openComingSoonFragment() {

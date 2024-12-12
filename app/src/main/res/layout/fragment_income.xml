@@ -19,7 +19,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:padding="20dp"/>
+        android:padding="20dp"
+        android:textColor="@color/black"/>
 
 
     <!-- Date Picker EditText -->
@@ -32,7 +33,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.9"
         android:layout_marginBottom="16dp"
-        android:hint="@string/date_hint">
+        android:hint="@string/date_hint"
+        app:hintTextColor="@color/black"
+        android:textColorHint="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etDatePicker"
@@ -41,7 +44,7 @@
             android:inputType="none"
             android:drawableEnd="@drawable/ic_calender"
             android:focusable="false"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="@color/white"
             android:textColor="@color/black"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -55,22 +58,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.9"
         android:layout_marginBottom="16dp"
-        android:hint="@string/amount_hint">
+        android:hint="@string/amount_hint"
+        app:hintTextColor="@color/black"
+        android:textColorHint="@color/black">
+
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
-            android:backgroundTint="@color/gray"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:backgroundTint="@color/black"
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Category Spinner -->
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilCategory"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:boxBackgroundMode="outline"
@@ -79,14 +84,20 @@
         app:layout_constraintTop_toBottomOf="@+id/tilAmount"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.9">
+        app:layout_constraintWidth_percent="0.9"
+        android:textColorHint="@color/black"
+        android:backgroundTint="@color/white"
+        app:hintTextColor="@color/black">
 
         <Spinner
             android:id="@+id/spinnerCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:popupBackground="@android:color/white"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Note EditText -->
@@ -99,7 +110,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.9"
         android:layout_marginBottom="16dp"
-        android:hint="@string/note_hint">
+        android:hint="@string/note_hint"
+        app:hintTextColor="@color/black"
+        android:textColorHint="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNote"
@@ -107,7 +120,8 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:backgroundTint="@color/black"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Save Button -->
