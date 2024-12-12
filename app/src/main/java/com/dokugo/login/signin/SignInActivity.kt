@@ -52,7 +52,7 @@ class SignInActivity : AppCompatActivity() {
 
         val BtSignIn: MaterialButton = findViewById(R.id.bt_signin)
         BtSignIn.setOnClickListener {
-            val email = binding.usernameComponent.editText?.text.toString().trim()
+            val email = binding.emailComponent.editText?.text.toString().trim()
             val password = binding.passwordComponent.editText?.text.toString().trim()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
