@@ -9,7 +9,9 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.dokugo.R
@@ -51,10 +53,28 @@ class ExpenseFragment : Fragment() {
             showDatePickerDialog()
         }
 
-        // Set up the Spinner for Categories
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categories)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        // Membuat ArrayAdapter
+        val adapter = object : ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, categories) {
+            // Mengubah warna teks untuk tampilan utama spinner
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view = super.getView(position, convertView, parent)
+                val textView = view.findViewById<TextView>(android.R.id.text1)
+                textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.black)) // Mengatur warna teks menjadi hitam
+                return view
+            }
+
+            // Mengubah warna teks untuk dropdown spinner
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view = super.getDropDownView(position, convertView, parent)
+                val textView = view.findViewById<TextView>(android.R.id.text1)
+                textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.black)) // Mengatur warna teks dropdown menjadi hitam
+                return view
+            }
+        }
+
+// Menetapkan adapter ke spinnerCategory
         spinnerCategory.adapter = adapter
+
 
         // Set up the Save button
         btnSave.setOnClickListener {

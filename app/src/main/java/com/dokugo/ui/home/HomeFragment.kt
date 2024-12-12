@@ -212,13 +212,15 @@ class HomeFragment : Fragment() {
         xAxis.labelCount = xAxisLabels.size
         xAxis.isGranularityEnabled = true
 
+
         val yAxis: YAxis = lineChart.axisLeft
         yAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 return if (value == 0f) "0" else String.format(Locale("in", "ID"), "%.0f000", value / 1000)
             }
         }
-        yAxis.axisMaximum = (Math.ceil((incomeEntries.maxOfOrNull { it.y } ?: 0f).toDouble() / 1000) * 1000).toFloat()
+        yAxis.axisMinimum = 0f
+        yAxis.axisMaximum = (Math.ceil((incomeEntries.maxOfOrNull { it.y } ?: 0f).toDouble() / 1000) * 1000).toFloat() * 1.2f
         yAxis.axisMinimum = 0f
         lineChart.axisRight.isEnabled = false
     }
