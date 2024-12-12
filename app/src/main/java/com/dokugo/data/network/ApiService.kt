@@ -1,6 +1,7 @@
 package com.dokugo.data.network
 
 import com.dokugo.data.response.GenericResponse
+import com.dokugo.data.response.IncomeResponseItem
 import com.dokugo.data.response.LoginResponse
 import com.dokugo.data.response.ProfileResponse
 import com.dokugo.data.response.RegisterResponse
@@ -61,4 +62,8 @@ interface ApiService {
 
     @POST("resetPassword")
     suspend fun resetPassword(@Body resetData: Map<String, String>): GenericResponse
+
+    @GET("income")
+    suspend fun getIncomeList(@Header("Authorization") token: String): List<IncomeResponseItem>
+
 }
