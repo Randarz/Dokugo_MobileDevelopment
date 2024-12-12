@@ -3,8 +3,10 @@ package com.dokugo.login.resetpassword
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.dokugo.R
@@ -14,16 +16,22 @@ import com.dokugo.login.signin.SignInActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
+import org.json.JSONObject
+import retrofit2.HttpException
 
 class ForgetPasswordActivity : AppCompatActivity() {
 
     private lateinit var userRepository: UserRepository
+    private lateinit var progressBar: ProgressBar
+    private lateinit var overlay: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forget_password)
 
         userRepository = UserRepository(RetrofitInstance.api)
+        progressBar = findViewById(R.id.progressBar)
+        overlay = findViewById(R.id.overlay)
 
         val icBack: ImageView = findViewById(R.id.ic_back)
         icBack.setOnClickListener {
@@ -50,6 +58,8 @@ class ForgetPasswordActivity : AppCompatActivity() {
     }
 
     private fun sendOtp(email: String) {
+        overlay.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE
         lifecycleScope.launch {
             try {
                 val response = userRepository.sendOtp(email)
@@ -62,8 +72,26 @@ class ForgetPasswordActivity : AppCompatActivity() {
                     Toast.makeText(this@ForgetPasswordActivity, "Error: ${response.message}", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@ForgetPasswordActivity, "Failed to send OTP: ${e.message}", Toast.LENGTH_SHORT).show()
+                val errorMessage = parseErrorResponse(e)
+                Toast.makeText(this@ForgetPasswordActivity, "Failed to send OTP: $errorMessage", Toast.LENGTH_SHORT).show()
+            } finally {
+                overlay.visibility = View.GONE
+                progressBar.visibility = View.GONE
             }
+        }
+    }
+
+    private fun parseErrorResponse(exception: Exception): String {
+        return try {
+            val errorBody = (exception as? HttpException)?.response()?.errorBody()?.string()
+            if (errorBody != null) {
+                val jsonObject = JSONObject(errorBody)
+                jsonObject.getString("error")
+            } else {
+                exception.message ?: "Unknown error"
+            }
+        } catch (e: Exception) {
+            exception.message ?: "Unknown error"
         }
     }
 }

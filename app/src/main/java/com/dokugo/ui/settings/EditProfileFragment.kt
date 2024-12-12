@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -14,10 +15,8 @@ import com.dokugo.data.repository.UserRepository
 import com.dokugo.data.network.RetrofitInstance
 import com.dokugo.databinding.FragmentEditProfileBinding
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import java.io.File
+import org.json.JSONObject
+import retrofit2.HttpException
 
 class EditProfileFragment : Fragment() {
 
@@ -25,16 +24,20 @@ class EditProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var userRepository: UserRepository
+    private lateinit var progressBar: ProgressBar
+    private lateinit var overlay: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         userRepository = UserRepository(RetrofitInstance.api)
+        progressBar = binding.root.findViewById(R.id.progressBar)
+        overlay = binding.root.findViewById(R.id.overlay)
 
         loadProfile()
 
@@ -64,6 +67,7 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun getProfile() {
+        showLoading(true)
         lifecycleScope.launch {
             try {
                 val token = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE).getString("auth_token", null) ?: ""
@@ -81,12 +85,16 @@ class EditProfileFragment : Fragment() {
                     apply()
                 }
             } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Failed to load profile: ${e.message}", Toast.LENGTH_SHORT).show()
+                val errorMessage = parseErrorResponse(e)
+                Toast.makeText(requireContext(), "Failed to load profile: $errorMessage", Toast.LENGTH_SHORT).show()
+            } finally {
+                showLoading(false)
             }
         }
     }
 
     private fun updateProfile(username: String, email: String, phoneNumber: String) {
+        showLoading(true)
         lifecycleScope.launch {
             try {
                 val token = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE).getString("auth_token", null) ?: ""
@@ -107,33 +115,31 @@ class EditProfileFragment : Fragment() {
                     Toast.makeText(requireContext(), "Error: ${response.message}", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Failed to update profile: ${e.message}", Toast.LENGTH_SHORT).show()
+                val errorMessage = parseErrorResponse(e)
+                Toast.makeText(requireContext(), "Failed to update profile: $errorMessage", Toast.LENGTH_SHORT).show()
+            } finally {
+                showLoading(false)
             }
         }
     }
 
-    private fun updateProfilePhoto(photoFile: File) {
-        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), photoFile)
-        val body = MultipartBody.Part.createFormData("photo", photoFile.name, requestFile)
-
-        lifecycleScope.launch {
-            try {
-                val token = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE).getString("auth_token", null) ?: ""
-                val response = userRepository.updateProfilePhoto(token, photoFile)
-                if (!response.error) {
-                    Toast.makeText(requireContext(), "Profile photo updated successfully", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(requireContext(), "Error: ${response.message}", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Failed to update profile photo: ${e.message}", Toast.LENGTH_SHORT).show()
+    private fun parseErrorResponse(exception: Exception): String {
+        return try {
+            val errorBody = (exception as? HttpException)?.response()?.errorBody()?.string()
+            if (errorBody != null) {
+                val jsonObject = JSONObject(errorBody)
+                jsonObject.getString("error")
+            } else {
+                exception.message ?: "Unknown error"
             }
+        } catch (e: Exception) {
+            exception.message ?: "Unknown error"
         }
     }
 
-    private fun getPhotoFile(): File? {
-        // Implement logic to get the photo file
-        return null
+    private fun showLoading(isLoading: Boolean) {
+        progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        overlay.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {

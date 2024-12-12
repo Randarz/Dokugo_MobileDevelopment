@@ -10,6 +10,7 @@ import android.os.Looper
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.dokugo.MainActivity
@@ -22,11 +23,14 @@ import com.dokugo.data.repository.UserRepository
 import com.dokugo.data.network.RetrofitInstance
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class SignInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignInBinding
     private lateinit var userRepository: UserRepository
+    private lateinit var progressBar: ProgressBar
+    private lateinit var overlay: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +39,8 @@ class SignInActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         userRepository = UserRepository(RetrofitInstance.api)
+        progressBar = findViewById(R.id.progressBar)
+        overlay = findViewById(R.id.overlay)
 
         PlayAnimation()
 
@@ -74,6 +80,8 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun loginUser(email: String, password: String) {
+        overlay.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE
         lifecycleScope.launch {
             try {
                 val response = userRepository.loginUser(email, password)
@@ -86,8 +94,27 @@ class SignInActivity : AppCompatActivity() {
                     Toast.makeText(this@SignInActivity, "Error: ${response.message}", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@SignInActivity, "Login failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                // Parse the error response
+                val errorMessage = parseErrorResponse(e)
+                Toast.makeText(this@SignInActivity, "Login failed: $errorMessage", Toast.LENGTH_SHORT).show()
+            } finally {
+                overlay.visibility = View.GONE
+                progressBar.visibility = View.GONE
             }
+        }
+    }
+
+    private fun parseErrorResponse(exception: Exception): String {
+        return try {
+            val errorBody = (exception as? retrofit2.HttpException)?.response()?.errorBody()?.string()
+            if (errorBody != null) {
+                val jsonObject = JSONObject(errorBody)
+                jsonObject.getString("error")
+            } else {
+                exception.message ?: "Unknown error"
+            }
+        } catch (e: Exception) {
+            exception.message ?: "Unknown error"
         }
     }
 

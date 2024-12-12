@@ -52,6 +52,11 @@
     <string name="username_hint">Username</string>
     <string name="email_hint">Email</string>
 
+    <!--EditAvatar-->
+    <string name="choose">Choose Avatar</string>
+    <string name="avatar1">https://storage.googleapis.com/dokugo-storage/avatar1.png</string>
+    <string name="avatar2">https://storage.googleapis.com/dokugo-storage/avatar2.png</string>
+    <string name="avatar3">https://storage.googleapis.com/dokugo-storage/avatar3.png</string>
 
     <!--Income & Expense-->
     <string name="tv_income">Add New Income</string>

@@ -47,10 +47,9 @@ class UserRepository(private val apiService: ApiService) {
         return apiService.deleteProfile("Bearer $token")
     }
 
-    suspend fun updateProfilePhoto(token: String, file: File): GenericResponse {
-        val requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
-        val body = MultipartBody.Part.createFormData("photo", file.name, requestFile)
-        return apiService.updateProfilePhoto("Bearer $token", body)
+    suspend fun updateProfilePhotoUrl(token: String, avatarUrl: String): GenericResponse {
+        val profile = mapOf("avatarUrl" to avatarUrl)
+        return apiService.updateProfilePhotoUrl("Bearer $token", profile)
     }
 
     suspend fun sendOtp(email: String): GenericResponse {

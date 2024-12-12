@@ -2,10 +2,10 @@ package com.dokugo.login.resetpassword
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.dokugo.R
@@ -18,6 +18,8 @@ class OtpActivity : AppCompatActivity() {
 
     private lateinit var userRepository: UserRepository
     private lateinit var email: String
+    private lateinit var progressBar: ProgressBar
+    private lateinit var overlay: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,8 @@ class OtpActivity : AppCompatActivity() {
 
         userRepository = UserRepository(RetrofitInstance.api)
         email = intent.getStringExtra("email") ?: ""
+        progressBar = findViewById(R.id.progressBar)
+        overlay = findViewById(R.id.overlay)
 
         val otpFields = listOf(
             findViewById<EditText>(R.id.otp_digit1),
@@ -35,21 +39,19 @@ class OtpActivity : AppCompatActivity() {
             findViewById<EditText>(R.id.otp_digit6)
         )
 
-        // Add TextWatcher to handle auto-focus
         otpFields.forEachIndexed { index, editText ->
-            editText.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (s?.length == 1 && index < otpFields.size - 1) {
-                        otpFields[index + 1].requestFocus()
-                    } else if (s?.isEmpty() == true && index > 0) {
-                        otpFields[index - 1].requestFocus()
-                    }
+        editText.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s?.length == 1 && index < otpFields.size - 1) {
+                    otpFields[index + 1].requestFocus()
+                } else if (s?.isEmpty() == true && index > 0) {
+                    otpFields[index - 1].requestFocus()
                 }
-
-                override fun afterTextChanged(s: Editable?) {}
-            })
-        }
+            }
+            override fun afterTextChanged(s: android.text.Editable?) {}
+        })
+    }
 
         val btConfOtp: MaterialButton = findViewById(R.id.bt_confotp)
         btConfOtp.setOnClickListener {
@@ -63,6 +65,8 @@ class OtpActivity : AppCompatActivity() {
     }
 
     private fun verifyOtp(email: String, otp: String) {
+        overlay.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE
         lifecycleScope.launch {
             try {
                 val response = userRepository.verifyOtp(email, otp)
@@ -76,6 +80,9 @@ class OtpActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 Toast.makeText(this@OtpActivity, "Failed to verify OTP: ${e.message}", Toast.LENGTH_SHORT).show()
+            } finally {
+                overlay.visibility = View.GONE
+                progressBar.visibility = View.GONE
             }
         }
     }

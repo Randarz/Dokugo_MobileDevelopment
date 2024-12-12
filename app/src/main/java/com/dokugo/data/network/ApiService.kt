@@ -46,11 +46,10 @@ interface ApiService {
     @DELETE("profile/delete")
     suspend fun deleteProfile(@Header("Authorization") token: String): GenericResponse
 
-    @Multipart
-    @PATCH("/profile/photo")
-    suspend fun updateProfilePhoto(
+    @PATCH("profile/photo")
+    suspend fun updateProfilePhotoUrl(
         @Header("Authorization") token: String,
-        @Part photo: MultipartBody.Part
+        @Body profile: Map<String, String>
     ): GenericResponse
 
     @POST("forgotPassword")

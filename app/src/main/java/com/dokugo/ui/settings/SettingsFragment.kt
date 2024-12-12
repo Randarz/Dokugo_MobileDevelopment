@@ -1,25 +1,16 @@
 package com.dokugo.ui.settings
 
-import android.Manifest
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -32,9 +23,9 @@ import com.dokugo.data.repository.UserRepository
 import com.dokugo.databinding.FragmentSettingsBinding
 import com.dokugo.login.signin.SignInActivity
 import kotlinx.coroutines.launch
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
+import org.json.JSONObject
+import retrofit2.HttpException
+import androidx.appcompat.app.AlertDialog
 
 class SettingsFragment : Fragment() {
 
@@ -43,8 +34,12 @@ class SettingsFragment : Fragment() {
 
     private lateinit var navController: NavController
     private lateinit var userRepository: UserRepository
+    private lateinit var progressBar: ProgressBar
+    private lateinit var overlay: View
 
-    private val MAXIMAL_SIZE = 1 * 1024 * 1024 // 1MB
+    companion object {
+        private const val REQUEST_CODE_AVATAR = 1
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +50,8 @@ class SettingsFragment : Fragment() {
 
         navController = findNavController()
         userRepository = UserRepository(RetrofitInstance.api)
+        progressBar = binding.progressBar
+        overlay = binding.overlay
 
         loadProfile()
 
@@ -106,86 +103,46 @@ class SettingsFragment : Fragment() {
             alert.show()
         }
 
-        binding.changePhotoContainer.setOnClickListener {
-            requestStoragePermission()
+        binding.btnChangePhoto.setOnClickListener {
+            val intent = Intent(requireContext(), ProfileAvatarActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE_AVATAR)
         }
 
         return root
     }
 
-    private fun requestStoragePermission() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
-        } else {
-            openGallery()
-        }
-    }
-
-    private fun openGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        galleryLauncher.launch(intent)
-    }
-
-    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val data: Intent? = result.data
-            val selectedImageUri: Uri? = data?.data
-            selectedImageUri?.let {
-                val filePath = getRealPathFromURI(it)
-                if (filePath != null) {
-                    val file = File(filePath)
-                    val compressedFile = file.reduceFileImage()
-                    uploadPhoto(compressedFile)
-                } else {
-                    Toast.makeText(requireContext(), "Failed to get image path", Toast.LENGTH_SHORT).show()
-                }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_AVATAR && resultCode == Activity.RESULT_OK) {
+            val avatarUrl = data?.getStringExtra("avatar_url")
+            if (avatarUrl != null) {
+                updateProfilePhoto(avatarUrl)
             }
         }
     }
 
-    private fun getRealPathFromURI(contentUri: Uri): String? {
-        var result: String? = null
-        val cursor = requireContext().contentResolver.query(contentUri, null, null, null, null)
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                val idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
-                result = cursor.getString(idx)
-            }
-            cursor.close()
-        }
-        return result
-    }
-
-    private fun File.reduceFileImage(): File {
-        val bitmap = BitmapFactory.decodeFile(this.path)
-        var compressQuality = 100
-        var streamLength: Int
-
-        do {
-            val bmpStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
-            val bmpPicByteArray = bmpStream.toByteArray()
-            streamLength = bmpPicByteArray.size
-            compressQuality -= 5
-        } while (streamLength > MAXIMAL_SIZE && compressQuality > 0)
-
-        bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(this))
-        return this
-    }
-
-    private fun uploadPhoto(file: File) {
+    private fun updateProfilePhoto(avatarUrl: String) {
+        showLoading(true)
         lifecycleScope.launch {
             try {
                 val token = getTokenFromSharedPreferences()
-                val response = userRepository.updateProfilePhoto(token, file)
+                val response = userRepository.updateProfilePhotoUrl(token, avatarUrl)
                 if (!response.error) {
-                    Toast.makeText(requireContext(), "Photo uploaded successfully", Toast.LENGTH_SHORT).show()
-                    loadProfile()
+                    // Save the new avatar URL in SharedPreferences
+                    val sharedPreferences = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+                    sharedPreferences.edit().putString("avatar_url", avatarUrl).apply()
+
+                    // Update the UI with the new avatar URL
+                    Glide.with(this@SettingsFragment).load(avatarUrl).into(binding.imgProfile)
+                    Toast.makeText(requireContext(), "Photo updated successfully", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(requireContext(), "Error: ${response.message}", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Failed to upload photo: ${e.message}", Toast.LENGTH_SHORT).show()
+                val errorMessage = parseErrorResponse(e)
+                Toast.makeText(requireContext(), "Failed to update photo: $errorMessage", Toast.LENGTH_SHORT).show()
+            } finally {
+                showLoading(false)
             }
         }
     }
@@ -196,6 +153,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun loadProfile() {
+        showLoading(true)
         val sharedPreferences = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         val username = sharedPreferences.getString("username", null)
         val email = sharedPreferences.getString("email", null)
@@ -206,6 +164,7 @@ class SettingsFragment : Fragment() {
             binding.tvUsername.text = username
             binding.tvEmail.text = email
             Glide.with(this).load(avatarUrl).into(binding.imgProfile)
+            showLoading(false)
         } else {
             getProfile()
         }
@@ -216,6 +175,7 @@ class SettingsFragment : Fragment() {
         val token = sharedPreferences.getString("auth_token", null)
 
         if (token != null) {
+            showLoading(true)
             lifecycleScope.launch {
                 try {
                     val response = userRepository.getProfile(token)
@@ -234,7 +194,10 @@ class SettingsFragment : Fragment() {
                         apply()
                     }
                 } catch (e: Exception) {
-                    Toast.makeText(requireContext(), "Failed to load profile: ${e.message}", Toast.LENGTH_SHORT).show()
+                    val errorMessage = parseErrorResponse(e)
+                    Toast.makeText(requireContext(), "Failed to load profile: $errorMessage", Toast.LENGTH_SHORT).show()
+                } finally {
+                    showLoading(false)
                 }
             }
         } else {
@@ -247,6 +210,7 @@ class SettingsFragment : Fragment() {
         val token = sharedPreferences.getString("auth_token", null)
 
         if (token != null) {
+            showLoading(true)
             lifecycleScope.launch {
                 try {
                     val response = userRepository.deleteProfile(token)
@@ -257,11 +221,28 @@ class SettingsFragment : Fragment() {
                         Toast.makeText(requireContext(), "Error: ${response.message}", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: Exception) {
-                    Toast.makeText(requireContext(), "Failed to delete profile: ${e.message}", Toast.LENGTH_SHORT).show()
+                    val errorMessage = parseErrorResponse(e)
+                    Toast.makeText(requireContext(), "Failed to delete profile: $errorMessage", Toast.LENGTH_SHORT).show()
+                } finally {
+                    showLoading(false)
                 }
             }
         } else {
             Toast.makeText(requireContext(), "No token found. Please log in again.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun parseErrorResponse(exception: Exception): String {
+        return try {
+            val errorBody = (exception as? HttpException)?.response()?.errorBody()?.string()
+            if (errorBody != null) {
+                val jsonObject = JSONObject(errorBody)
+                jsonObject.getString("error")
+            } else {
+                exception.message ?: "Unknown error"
+            }
+        } catch (e: Exception) {
+            exception.message ?: "Unknown error"
         }
     }
 
@@ -279,6 +260,11 @@ class SettingsFragment : Fragment() {
         val intent = Intent(requireContext(), SignInActivity::class.java)
         startActivity(intent)
         activity?.finish()
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        overlay.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {

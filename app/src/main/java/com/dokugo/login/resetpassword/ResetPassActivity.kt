@@ -3,6 +3,9 @@ package com.dokugo.login.resetpassword
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import android.widget.ProgressBar
+import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.dokugo.R
@@ -17,6 +20,8 @@ class ResetPassActivity : AppCompatActivity() {
 
     private lateinit var userRepository: UserRepository
     private lateinit var resetToken: String
+    private lateinit var progressBar: ProgressBar
+    private lateinit var overlay: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +29,8 @@ class ResetPassActivity : AppCompatActivity() {
 
         userRepository = UserRepository(RetrofitInstance.api)
         resetToken = intent.getStringExtra("resetToken") ?: ""
+        progressBar = findViewById(R.id.progressBar)
+        overlay = findViewById(R.id.overlay)
 
         val btResetPass: MaterialButton = findViewById(R.id.bt_resetpass)
         btResetPass.setOnClickListener {
@@ -38,6 +45,8 @@ class ResetPassActivity : AppCompatActivity() {
     }
 
     private fun resetPassword(resetToken: String, newPassword: String) {
+        overlay.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE
         lifecycleScope.launch {
             try {
                 val response = userRepository.resetPassword(resetToken, newPassword)
@@ -50,7 +59,26 @@ class ResetPassActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 Toast.makeText(this@ResetPassActivity, "Failed to reset password: ${e.message}", Toast.LENGTH_SHORT).show()
+            } finally {
+                overlay.visibility = View.GONE
+                progressBar.visibility = View.GONE
             }
         }
     }
+
+    override fun onBackPressed() {
+    val builder = AlertDialog.Builder(this)
+    builder.setMessage("Are you sure you want to cancel changing password?")
+        .setCancelable(false)
+        .setPositiveButton("Yes") { _, _ ->
+            val intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        .setNegativeButton("No") { dialog, _ ->
+            dialog.dismiss()
+        }
+    val alert = builder.create()
+    alert.show()
+}
 }
