@@ -1,0 +1,2 @@
+NOTE THAT THIS IS THE UNFINISHED ONE
+FULL VERSION IS HERE >>> https://github.com/DokuGo-Capstone
